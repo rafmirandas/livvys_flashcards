@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Flash Cards</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            text-align: center;
+            background-color: #ffecf0; /* Soft pink background */
+            margin: 0;
+            padding: 20px;
+        }
+        h1{
+            color: #ff3399;
+            font-size: 46px;;
+        }
+        .card {
+            background: #fff5fa; /* Light pastel pink */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: center;
+            margin-top: 30px;
+            border: 3px solid #ff66b2; /* Hot pink border */
+        }
+        #question {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff3399; /* Deep pink */
+            margin-bottom: 10px;
+        }
+        #answer {
+            font-size: 26px;
+            padding: 10px;
+            width: 140px;
+            text-align: center;
+            margin: 10px;
+            border: 3px solid #ff66b2;
+            border-radius: 10px;
+            background-color: #fff;
+            color: #d63384; /* Soft purple */
+        }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 70px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .key {
+            font-size: 24px;
+            padding: 15px;
+            background-color: #ff99cc; /* Light pink */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .key:hover {
+            background-color: #ff66b2; /* Darker pink on hover */
+            color: white;
+        }
+        .enter {
+            grid-column: span 3;
+            background-color: #ff4d94;
+            font-weight: bold;
+            color: white;
+        }
+        .clear {
+            grid-column: span 3;
+            background-color: #CCCCCC;
+            font-weight: NORMAL;
+            color: #333333;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .wrong {
+            color: red;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .score {
+            font-size: 18px;
+            color: #ff3399;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌸 Livvy's</h1>
+    <div class="card">
+        <h2>🌸 Multiplication Flash Card 🌸</h2>
+        <h1 id="question">2 × 3 = ?</h1>
+        <input type="text" id="answer" readonly>
+        <div class="keypad">
+            <button class="key" onclick="addNumber(1)">1</button>
+            <button class="key" onclick="addNumber(2)">2</button>
+            <button class="key" onclick="addNumber(3)">3</button>
+            <button class="key" onclick="addNumber(4)">4</button>
+            <button class="key" onclick="addNumber(5)">5</button>
+            <button class="key" onclick="addNumber(6)">6</button>
+            <button class="key" onclick="addNumber(7)">7</button>
+            <button class="key" onclick="addNumber(8)">8</button>
+            <button class="key" onclick="addNumber(9)">9</button>
+            <button class="key" onclick="addNumber(0)">0</button>
+            <button class="key enter" onclick="checkAnswer()">Enter</button>
+            <button class="key clear" onclick="clearAnswer()">Clear</button>
+        </div>
+        <p id="feedback"></p>
+        <p class="score">Score: <span id="score">0</span></p>
+    </div>
+
+    <script>
+        let num1, num2, correctAnswer, score = 0;
+
+        function generateQuestion() {
+            num1 = Math.floor(Math.random() * 12) + 1; // Random 1-12
+            num2 = Math.floor(Math.random() * 12) + 1;
+            correctAnswer = num1 * num2;
+            document.getElementById('question').textContent = `${num1} × ${num2} = ?`;
+            document.getElementById('answer').value = '';
+            document.getElementById('feedback').textContent = '';
+        }
+
+        function addNumber(num) {
+            document.getElementById('answer').value += num;
+        }
+
+        function clearAnswer() {
+            document.getElementById('answer').value = '';
+        }
+
+        function checkAnswer() {
+            let userAnswer = parseInt(document.getElementById('answer').value);
+            if (userAnswer === correctAnswer) {
+                document.getElementById('feedback').textContent = "🎉 Correct! Good job!";
+                document.getElementById('feedback').className = "correct";
+                score++;
+                document.getElementById('score').textContent = score;
+            } else {
+                document.getElementById('feedback').textContent = `❌ Oops! The correct answer is ${correctAnswer}`;
+                document.getElementById('feedback').className = "wrong";
+            }
+            setTimeout(generateQuestion, 1500); // New question after 1.5 seconds
+        }
+
+        generateQuestion(); // Start game
+    </script>
+
+</body>
+</html>
